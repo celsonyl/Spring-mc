@@ -2,6 +2,7 @@ package com.celso.springmc.services;
 
 import com.celso.springmc.domain.Categoria;
 import com.celso.springmc.repositories.CategoriaRepository;
+import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class CategoriaService {
 
     public Categoria busca(int id){
         Optional<Categoria> cat = categoriaRepository.findById(id);
-        return cat.orElse(null);
+        return cat.orElseThrow(() -> new ObjectNotFoundException(
+                "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 }
