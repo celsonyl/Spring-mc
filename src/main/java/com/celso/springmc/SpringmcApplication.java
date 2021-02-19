@@ -1,13 +1,8 @@
 package com.celso.springmc;
 
-import com.celso.springmc.domain.Categoria;
-import com.celso.springmc.domain.Cidade;
-import com.celso.springmc.domain.Estado;
-import com.celso.springmc.domain.Produto;
-import com.celso.springmc.repositories.CategoriaRepository;
-import com.celso.springmc.repositories.CidadeRepository;
-import com.celso.springmc.repositories.EstadoRepository;
-import com.celso.springmc.repositories.ProdutoRepository;
+import com.celso.springmc.domain.*;
+import com.celso.springmc.domain.enums.TipoCliente;
+import com.celso.springmc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,6 +24,12 @@ public class SpringmcApplication implements CommandLineRunner {
 
 	@Autowired
 	private CidadeRepository cidadeRepository;
+
+	@Autowired
+	private ClienteRepository clienteRepository;
+
+	@Autowired
+	private EnderecoRepository enderecoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringmcApplication.class, args);
@@ -65,6 +66,23 @@ public class SpringmcApplication implements CommandLineRunner {
 
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
+
+		Cliente cli1 = new Cliente(0,"Maria Silva","maria@gmail.com","36378912377", TipoCliente.PESSOAFISICA);
+		cli1.getTelefones().addAll(Arrays.asList("93838393","27363323"));
+
+		Endereco e1 = new Endereco(0,"Rua Flores","300","Apto 203","Jardim","38220834",cli1,cid1);
+		Endereco e2 = new Endereco(0,"Avenida Matos","105","Sala 800","Centro","38777012",cli1,cid2);
+
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+
+
+
+
+
+
 
 	}
 }
