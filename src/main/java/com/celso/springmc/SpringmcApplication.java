@@ -1,6 +1,7 @@
 package com.celso.springmc;
 
 import com.celso.springmc.domain.*;
+import com.celso.springmc.domain.enums.EstadoPagamento;
 import com.celso.springmc.domain.enums.TipoCliente;
 import com.celso.springmc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 @SpringBootApplication
@@ -30,6 +32,12 @@ public class SpringmcApplication implements CommandLineRunner {
 
 	@Autowired
 	private EnderecoRepository enderecoRepository;
+
+	@Autowired
+	private PagamentoRepository pagamentoRepository;
+
+	@Autowired
+	private PedidoRepository pedidoRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringmcApplication.class, args);
@@ -77,6 +85,24 @@ public class SpringmcApplication implements CommandLineRunner {
 
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
+
+		SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+		Pedido ped1 = new Pedido(0,date.parse("30/09/2017 10:32"),cli1,e1);
+		Pedido ped2 = new Pedido(0,date.parse("10/10/2017 19:35"),cli1,e2);
+
+		Pagamento pag1 = new PagamentoComCartao(0, EstadoPagamento.QUITADO,ped1,6);
+		ped1.setPagamento(pag1);
+
+		Pagamento pag2 = new PagamentoComBoleto(0,EstadoPagamento.PENDENTE,ped2,date.parse("20/10/2017 00:00"),null);
+		ped2.setPagamento(pag2);
+
+		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));
+
+		pedidoRepository.saveAll(Arrays.asList(ped1,ped2));
+		pagamentoRepository.saveAll(Arrays.asList(pag1,pag2));
+
+
 
 
 
