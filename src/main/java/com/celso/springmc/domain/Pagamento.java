@@ -2,6 +2,7 @@ package com.celso.springmc.domain;
 
 import com.celso.springmc.domain.enums.EstadoPagamento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ public abstract class Pagamento implements Serializable {
     private int id;
     private Integer estadoPagamento;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedido_id")
     @MapsId
