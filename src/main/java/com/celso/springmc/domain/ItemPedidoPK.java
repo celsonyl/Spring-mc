@@ -36,9 +36,9 @@ public class ItemPedidoPK implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof ItemPedidoPK)) return false;
         ItemPedidoPK that = (ItemPedidoPK) o;
-        return pedido.equals(that.pedido) && produto.equals(that.produto);
+        return Objects.equals(pedido, that.pedido) && Objects.equals(produto, that.produto);
     }
 
     @Override

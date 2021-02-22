@@ -1,5 +1,7 @@
 package com.celso.springmc.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import java.io.Serializable;
@@ -8,6 +10,7 @@ import java.util.Objects;
 @Entity
 public class ItemPedido implements Serializable {
 
+    @JsonIgnore
     @EmbeddedId
     private ItemPedidoPK id = new ItemPedidoPK();
 
@@ -26,6 +29,7 @@ public class ItemPedido implements Serializable {
         this.preco = preco;
     }
 
+    @JsonIgnore
     public Pedido getPedido(){
         return id.getPedido();
     }
@@ -71,7 +75,7 @@ public class ItemPedido implements Serializable {
         if (this == o) return true;
         if (!(o instanceof ItemPedido)) return false;
         ItemPedido that = (ItemPedido) o;
-        return id.equals(that.id);
+        return Objects.equals(id, that.id);
     }
 
     @Override

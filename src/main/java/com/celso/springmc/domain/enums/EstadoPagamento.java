@@ -35,7 +35,7 @@ public enum EstadoPagamento {
             return null;
         }
         for(EstadoPagamento x : EstadoPagamento.values()) {
-            if (cod.equals(x)) {
+            if (cod.equals(x.getId())) {
                 return x;
             }
         }
