@@ -13,7 +13,7 @@ import java.util.Objects;
 public abstract class Pagamento implements Serializable {
 
     @Id
-    private int id;
+    private Integer id;
     private Integer estadoPagamento;
 
     @JsonIgnore
@@ -24,17 +24,17 @@ public abstract class Pagamento implements Serializable {
 
     public Pagamento(){}
 
-    public Pagamento(int id, EstadoPagamento estadoPagamento, Pedido pedido) {
+    public Pagamento(Integer id, EstadoPagamento estadoPagamento, Pedido pedido) {
         this.id = id;
         this.estadoPagamento = estadoPagamento.getId();
         this.pedido = pedido;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -48,12 +48,12 @@ public class SpringmcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		Categoria c1 = new Categoria(0,"Informática");
-		Categoria c2 = new Categoria(0,"Escritório");
+		Categoria c1 = new Categoria(null,"Informática");
+		Categoria c2 = new Categoria(null,"Escritório");
 
-		Produto p1 = new Produto(0,"Computador",2000.00);
-		Produto p2 = new Produto(0,"Impressora",800.00);
-		Produto p3 = new Produto(0,"Mouse",80.00);
+		Produto p1 = new Produto(null,"Computador",2000.00);
+		Produto p2 = new Produto(null,"Impressora",800.00);
+		Produto p3 = new Produto(null,"Mouse",80.00);
 
 		c1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
 		c2.getProdutos().add(p3);
@@ -65,12 +65,12 @@ public class SpringmcApplication implements CommandLineRunner {
 		categoriaRepository.saveAll(Arrays.asList(c1,c2));
 		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
 
-		Estado est1 = new Estado(0,"Minas Geraris");
-		Estado est2 = new Estado(0,"São Paulo");
+		Estado est1 = new Estado(null,"Minas Geraris");
+		Estado est2 = new Estado(null,"São Paulo");
 
-		Cidade cid1 = new Cidade(0,"Uberlândia",est1);
-		Cidade cid2 = new Cidade(0,"São Paulo",est2);
-		Cidade cid3 = new Cidade(0,"Campinas",est2);
+		Cidade cid1 = new Cidade(null,"Uberlândia",est1);
+		Cidade cid2 = new Cidade(null,"São Paulo",est2);
+		Cidade cid3 = new Cidade(null,"Campinas",est2);
 
 		est1.getCidades().add(cid1);
 		est2.getCidades().addAll(Arrays.asList(cid2,cid3));
@@ -78,11 +78,11 @@ public class SpringmcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1,est2));
 		cidadeRepository.saveAll(Arrays.asList(cid1,cid2,cid3));
 
-		Cliente cli1 = new Cliente(0,"Maria Silva","maria@gmail.com","36378912377", TipoCliente.PESSOAFISICA);
+		Cliente cli1 = new Cliente(null,"Maria Silva","maria@gmail.com","36378912377", TipoCliente.PESSOAFISICA);
 		cli1.getTelefones().addAll(Arrays.asList("93838393","27363323"));
 
-		Endereco e1 = new Endereco(0,"Rua Flores","300","Apto 203","Jardim","38220834",cli1,cid1);
-		Endereco e2 = new Endereco(0,"Avenida Matos","105","Sala 800","Centro","38777012",cli1,cid2);
+		Endereco e1 = new Endereco(null,"Rua Flores","300","Apto 203","Jardim","38220834",cli1,cid1);
+		Endereco e2 = new Endereco(null,"Avenida Matos","105","Sala 800","Centro","38777012",cli1,cid2);
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
 
@@ -91,13 +91,13 @@ public class SpringmcApplication implements CommandLineRunner {
 
 		SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 
-		Pedido ped1 = new Pedido(0,date.parse("30/09/2017 10:32"),cli1,e1);
-		Pedido ped2 = new Pedido(0,date.parse("10/10/2017 19:35"),cli1,e2);
+		Pedido ped1 = new Pedido(null,date.parse("30/09/2017 10:32"),cli1,e1);
+		Pedido ped2 = new Pedido(null,date.parse("10/10/2017 19:35"),cli1,e2);
 
-		Pagamento pag1 = new PagamentoComCartao(0, EstadoPagamento.QUITADO,ped1,6);
+		Pagamento pag1 = new PagamentoComCartao(null, EstadoPagamento.QUITADO,ped1,6);
 		ped1.setPagamento(pag1);
 
-		Pagamento pag2 = new PagamentoComBoleto(0,EstadoPagamento.PENDENTE,ped2,date.parse("20/10/2017 00:00"),null);
+		Pagamento pag2 = new PagamentoComBoleto(null,EstadoPagamento.PENDENTE,ped2,date.parse("20/10/2017 00:00"),null);
 		ped2.setPagamento(pag2);
 
 		cli1.getPedidos().addAll(Arrays.asList(ped1,ped2));

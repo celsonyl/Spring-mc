@@ -6,19 +6,19 @@ public enum EstadoPagamento {
     QUITADO(2,"Quitado"),
     CANCELADO(3,"Cancelado");
 
-    private int id;
+    private Integer id;
     private String nome;
 
-    private EstadoPagamento(int id, String nome) {
+    private EstadoPagamento(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
