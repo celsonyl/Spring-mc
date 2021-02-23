@@ -1,6 +1,7 @@
 package com.celso.springmc.resources;
 
 import com.celso.springmc.domain.Categoria;
+import com.celso.springmc.domain.dto.CategoriaDTO;
 import com.celso.springmc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,6 +12,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/categorias")
@@ -20,14 +22,22 @@ public class CategoriaResource {
     private CategoriaService categoriaService;
 
     @RequestMapping(value = "/{id}",method = RequestMethod.GET)
-    public ResponseEntity<Categoria> find(@PathVariable Integer id){
+    public ResponseEntity<Categoria> find(@PathVariable Integer id){ //Busca Categoria por ID
        Categoria obj = categoriaService.find(id);
 
         return ResponseEntity.ok(obj);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity <List<CategoriaDTO>> findAll(){  // Lista todas Categorias
+        List<Categoria> list = categoriaService.findAll();
+        List<CategoriaDTO> listDTO = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+
+        return ResponseEntity.ok(listDTO);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Void> insert(@RequestBody Categoria obj){
+    public ResponseEntity<Void> insert(@RequestBody Categoria obj){ //Insere uma Categoria
         obj = categoriaService.insert(obj);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 
@@ -36,7 +46,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.PUT)
-    public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){
+    public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){ //Atualiza uma Categoria
         obj.setId(id);
         categoriaService.update(obj);
 
@@ -44,7 +54,7 @@ public class CategoriaResource {
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Integer id){
+    public ResponseEntity<Void> delete(@PathVariable Integer id){ //Deleta uma Categoria
         categoriaService.delete(id);
 
         return ResponseEntity.noContent().build();
