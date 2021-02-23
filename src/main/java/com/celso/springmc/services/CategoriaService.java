@@ -2,8 +2,10 @@ package com.celso.springmc.services;
 
 import com.celso.springmc.domain.Categoria;
 import com.celso.springmc.repositories.CategoriaRepository;
+import com.celso.springmc.services.exceptions.DataIntegrityException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,5 +32,14 @@ public class CategoriaService {
             throw new ObjectNotFoundException("Categoria não existe! " + Categoria.class.getName());
         }
         return categoriaRepository.save(obj);
+    }
+
+    public void delete(Integer id){
+        find(id);
+        try {
+            categoriaRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new DataIntegrityException("Não é posivel deletar uma Categoria que possui Produtos!");
+        }
     }
 }

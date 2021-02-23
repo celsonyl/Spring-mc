@@ -3,6 +3,7 @@ package com.celso.springmc.resources;
 import com.celso.springmc.domain.Categoria;
 import com.celso.springmc.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -38,6 +39,13 @@ public class CategoriaResource {
     public ResponseEntity<Void> update(@RequestBody Categoria obj,@PathVariable Integer id){
         obj.setId(id);
         categoriaService.update(obj);
+
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        categoriaService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
