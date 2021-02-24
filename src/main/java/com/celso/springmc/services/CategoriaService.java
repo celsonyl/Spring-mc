@@ -1,6 +1,7 @@
 package com.celso.springmc.services;
 
 import com.celso.springmc.domain.Categoria;
+import com.celso.springmc.domain.dto.CategoriaDTO;
 import com.celso.springmc.repositories.CategoriaRepository;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
@@ -52,8 +53,12 @@ public class CategoriaService {
         }
     }
 
-    public Page<Categoria> findPage(Integer page,Integer linesPerPage,String orderBy,String direction){
+    public Page<Categoria> findPage(Integer page,Integer linesPerPage,String orderBy,String direction){ //Paginação com parãmetros opcionais na Requisição
         PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy);
         return categoriaRepository.findAll(pageRequest);
+    }
+
+    public Categoria fromDTO(CategoriaDTO objDTO){
+        return new Categoria(objDTO.getId(),objDTO.getNome());
     }
 }
