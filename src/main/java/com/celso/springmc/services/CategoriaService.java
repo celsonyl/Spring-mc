@@ -28,8 +28,8 @@ public class CategoriaService {
     }
 
     public List<Categoria> findAll(){ //Lista todas as Categorias
-        List<Categoria> obj = categoriaRepository.findAll();
-        return obj;
+        return categoriaRepository.findAll();
+
     }
 
     public Categoria insert(Categoria obj){ //Insere uma Categoria
@@ -37,11 +37,9 @@ public class CategoriaService {
         return categoriaRepository.save(obj);
     }
 
-    public Categoria update(Categoria obj){ //Atualiza uma Categoria
-        if(obj == null){
-            throw new ObjectNotFoundException("Categoria não existe! " + Categoria.class.getName());
-        }
-        return categoriaRepository.save(obj);
+    public void update(Categoria obj){ //Atualiza uma Categoria
+
+        categoriaRepository.save(obj);
     }
 
     public void delete(Integer id){ //Deleta uma Categoria
