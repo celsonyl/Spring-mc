@@ -1,6 +1,7 @@
 package com.celso.springmc.services;
 
 import com.celso.springmc.domain.Categoria;
+import com.celso.springmc.domain.Cliente;
 import com.celso.springmc.domain.dto.CategoriaDTO;
 import com.celso.springmc.repositories.CategoriaRepository;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
@@ -38,8 +39,9 @@ public class CategoriaService {
     }
 
     public void update(Categoria obj){ //Atualiza uma Categoria
-
-        categoriaRepository.save(obj);
+        Categoria newOBJ = find(obj.getId());
+        updateData(newOBJ,obj);
+        categoriaRepository.save(newOBJ);
     }
 
     public void delete(Integer id){ //Deleta uma Categoria
@@ -58,5 +60,10 @@ public class CategoriaService {
 
     public Categoria fromDTO(CategoriaDTO objDTO){
         return new Categoria(objDTO.getId(),objDTO.getNome());
+    }
+
+    private void updateData(Categoria newOBJ, Categoria obj){
+        newOBJ.setNome(obj.getNome());
+
     }
 }

@@ -29,13 +29,13 @@ public class ClienteService {
     return clienteRepository.findAll();
     }
 
-    public void update(Cliente obj){
+    public void update(Cliente obj){ // Atualiza Nome e Email de um Cliente
         Cliente newOBJ = find(obj.getId());
         updateData(newOBJ,obj);
         clienteRepository.save(newOBJ);
     }
 
-    public void delete(Integer id){
+    public void delete(Integer id){ //Delete um Cliente
         find(id);
         try{
             clienteRepository.deleteById(id);
