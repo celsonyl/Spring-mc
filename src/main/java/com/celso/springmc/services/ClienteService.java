@@ -1,6 +1,5 @@
 package com.celso.springmc.services;
 
-import com.celso.springmc.domain.Categoria;
 import com.celso.springmc.domain.Cidade;
 import com.celso.springmc.domain.Cliente;
 import com.celso.springmc.domain.Endereco;
@@ -41,10 +40,10 @@ public class ClienteService {
     }
 
     @Transactional
-    public Cliente insert(Cliente obj){ //Insere uma Categoria
+    public Cliente insert(Cliente obj) {
         obj.setId(null);
-        clienteRepository.save(obj);
-        enderecoRepository.saveAll((obj.getEnderecos()));
+        obj = clienteRepository.save(obj);
+        enderecoRepository.saveAll(obj.getEnderecos());
         return obj;
     }
 
@@ -73,9 +72,9 @@ public class ClienteService {
     }
 
     public Cliente fromDTO(ClienteNewDTO objDTO){
-        Cliente cliente = new Cliente(0,objDTO.getNome(),objDTO.getEmail(),objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()));
+        Cliente cliente = new Cliente(null,objDTO.getNome(),objDTO.getEmail(),objDTO.getCpfOuCnpj(), TipoCliente.toEnum(objDTO.getTipo()));
         Cidade cidade = new Cidade(objDTO.getCidadeID(),null,null);
-        Endereco endereco = new Endereco(0,objDTO.getLogradouro(),objDTO.getNumero(),objDTO.getComplemento(),objDTO.getBairro(),objDTO.getCep(),cliente,cidade);
+        Endereco endereco = new Endereco(null,objDTO.getLogradouro(),objDTO.getNumero(),objDTO.getComplemento(),objDTO.getBairro(),objDTO.getCep(),cliente,cidade);
 
         cliente.getEnderecos().add(endereco);
         cliente.getTelefones().add(objDTO.getTelefone1());
