@@ -1,8 +1,11 @@
 package com.celso.springmc.resources;
 
+import com.celso.springmc.domain.Categoria;
 import com.celso.springmc.domain.Cliente;
 import com.celso.springmc.domain.Cliente;
+import com.celso.springmc.domain.dto.CategoriaDTO;
 import com.celso.springmc.domain.dto.ClienteDTO;
+import com.celso.springmc.domain.dto.ClienteNewDTO;
 import com.celso.springmc.services.ClienteService;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +39,16 @@ public class ClienteResource {
         List<ClienteDTO> listDTO = list.stream().map(ClienteDTO::new).collect(Collectors.toList());
 
         return ResponseEntity.ok().body(listDTO);
+
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDTO){ //Insere uma CategoriaDTO
+        Cliente obj = clienteService.fromDTO(objDTO);
+        obj = clienteService.insert(obj);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
 
     }
 
