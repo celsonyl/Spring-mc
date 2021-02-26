@@ -31,7 +31,7 @@ public enum EstadoPagamento {
     }
 
     public static EstadoPagamento toEnum(Integer cod){
-        if(cod == null){
+        if(cod == null) {
             return null;
         }
         for(EstadoPagamento x : EstadoPagamento.values()) {
