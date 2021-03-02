@@ -33,6 +33,7 @@ public class CategoriaService {
 
     }
 
+
     public Categoria insert(Categoria obj){ //Insere uma Categoria
         obj.setId(null);
         return categoriaRepository.save(obj);

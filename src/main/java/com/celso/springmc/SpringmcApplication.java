@@ -9,6 +9,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
@@ -59,16 +60,37 @@ public class SpringmcApplication implements CommandLineRunner {
 		Produto p1 = new Produto(null,"Computador",2000.00);
 		Produto p2 = new Produto(null,"Impressora",800.00);
 		Produto p3 = new Produto(null,"Mouse",80.00);
+		Produto p4 = new Produto(null,"Mesa de escritório",300.00);
+		Produto p5 = new Produto(null,"Toalha",50.00);
+		Produto p6 = new Produto(null,"Colcha",200.00);
+		Produto p7 = new Produto(null,"TV True Color",1200.00);
+		Produto p8 = new Produto(null,"Roçadeira",800.00);
+		Produto p9 = new Produto(null,"Abajour",100.00);
+		Produto p10 = new Produto(null,"Pendente",180.00);
+		Produto p11 = new Produto(null,"Shampoo",90.00);
 
 		c1.getProdutos().addAll(Arrays.asList(p1,p2,p3));
-		c2.getProdutos().add(p3);
+		c2.getProdutos().addAll(Arrays.asList(p2,p4));
+		c3.getProdutos().addAll(Arrays.asList(p5,p6));
+		c4.getProdutos().addAll(Arrays.asList(p1,p2,p3,p7));
+		c5.getProdutos().add(p8);
+		c6.getProdutos().addAll(Arrays.asList(p9,p10));
+		c7.getProdutos().add(p11);
 
-		p1.getCategorias().add(c1);
-		p2.getCategorias().addAll(Arrays.asList(c1,c2));
-		p3.getCategorias().add(c1);
+		p1.getCategorias().addAll(Arrays.asList(c1,c4));
+		p2.getCategorias().addAll(Arrays.asList(c1,c2,c4));
+		p3.getCategorias().addAll(Arrays.asList(c1,c4));
+		p4.getCategorias().add(c2);
+		p5.getCategorias().add(c3);
+		p6.getCategorias().add(c3);
+		p7.getCategorias().add(c4);
+		p8.getCategorias().add(c5);
+		p9.getCategorias().add(c6);
+		p10.getCategorias().add(c6);
+		p11.getCategorias().add(c7);
 
 		categoriaRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5,c6,c7));
-		produtoRepository.saveAll(Arrays.asList(p1,p2,p3));
+		produtoRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11));
 
 		Estado est1 = new Estado(null,"Minas Geraris");
 		Estado est2 = new Estado(null,"São Paulo");
@@ -91,7 +113,7 @@ public class SpringmcApplication implements CommandLineRunner {
 
 		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
 
-		clienteRepository.saveAll(Arrays.asList(cli1));
+		clienteRepository.save(cli1);
 		enderecoRepository.saveAll(Arrays.asList(e1,e2));
 
 		SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
