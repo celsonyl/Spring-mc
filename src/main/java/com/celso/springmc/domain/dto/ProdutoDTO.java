@@ -1,5 +1,7 @@
 package com.celso.springmc.domain.dto;
 
+import com.celso.springmc.domain.Produto;
+
 import java.io.Serializable;
 
 public class ProdutoDTO implements Serializable {
@@ -10,9 +12,18 @@ public class ProdutoDTO implements Serializable {
 
     public ProdutoDTO(){}
 
+    public ProdutoDTO(Produto obj){
+        id = obj.getId();
+        nome = obj.getNome();
+        preco = obj.getPreco();
+
+    }
+
     public Integer getId() {
         return id;
     }
+
+
 
     public void setId(Integer id) {
         this.id = id;

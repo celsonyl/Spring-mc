@@ -147,13 +147,5 @@ public class SpringmcApplication implements CommandLineRunner {
 
 
 
-
-
-
-
-
-
-
-
 	}
 }
