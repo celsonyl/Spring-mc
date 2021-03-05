@@ -118,7 +118,7 @@ public class Pedido implements Serializable {
         final StringBuilder sb = new StringBuilder();
         sb.append("Pedido Numero: ");
         sb.append(getId());
-        sb.append(", Data: ");
+        sb.append("\n Data: ");
         sb.append(date.format(getInstante()));
         sb.append(", Nome do Cliente: ");
         sb.append(getCliente().getNome());
