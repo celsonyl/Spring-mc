@@ -1,6 +1,8 @@
 package com.celso.springmc.config;
 
 import com.celso.springmc.services.DBService;
+import com.celso.springmc.services.EmailService;
+import com.celso.springmc.services.MockEMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,5 +21,10 @@ public class TestConfig {
     public boolean instantiateDatabase() throws ParseException {
         dbService.instantiateTestDB();
         return true;
+    }
+
+    @Bean
+    public EmailService emailService(){
+        return new MockEMailService();
     }
 }
