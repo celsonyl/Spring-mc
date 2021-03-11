@@ -1,13 +1,13 @@
 package com.celso.springmc.domain.enums;
 
 public enum TipoCliente {
-    PESSOAFISICA(1,"Pessoa Fisica"),
-    PESSOAJURIDICA(2,"Pessoa Juridica");
+    PESSOAFISICA(1, "Pessoa Fisica"),
+    PESSOAJURIDICA(2, "Pessoa Juridica");
 
     private Integer cod;
     private String desc;
 
-    private TipoCliente(Integer cod,String desc){
+    private TipoCliente(Integer cod, String desc) {
         this.cod = cod;
         this.desc = desc;
     }
@@ -20,13 +20,13 @@ public enum TipoCliente {
         return desc;
     }
 
-    public static TipoCliente toEnum(Integer cod){
-        if(cod == null){
+    public static TipoCliente toEnum(Integer cod) {
+        if (cod == null) {
             return null;
         }
 
-        for(TipoCliente x : TipoCliente.values()){
-            if(cod.equals(x.getCod())){
+        for (TipoCliente x : TipoCliente.values()) {
+            if (cod.equals(x.getCod())) {
                 return x;
             }
         }

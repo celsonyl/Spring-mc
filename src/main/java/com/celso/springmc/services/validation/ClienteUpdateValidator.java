@@ -26,25 +26,25 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
     private HttpServletRequest request;
 
     @Override
-    public void initialize(ClienteUpdate ann){
+    public void initialize(ClienteUpdate ann) {
 
     }
 
     @Override
-    public boolean isValid(ClienteDTO objDTO, ConstraintValidatorContext context){
+    public boolean isValid(ClienteDTO objDTO, ConstraintValidatorContext context) {
         List<FieldMessage> list = new ArrayList<>();
 
-        Map<String,String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         Integer uriID = Integer.parseInt(map.get("id"));
 
         Cliente find = clienteRepository.findByEmail(objDTO.getEmail());
 
 
-        if(find != null && !find.getId().equals(uriID)){
-            list.add(new FieldMessage("email","Email já existe!"));
+        if (find != null && !find.getId().equals(uriID)) {
+            list.add(new FieldMessage("email", "Email já existe!"));
         }
 
-        for(FieldMessage e : list){
+        for (FieldMessage e : list) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
                     .addConstraintViolation();

@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class ClienteNewDTO implements Serializable {
 
     @NotEmpty(message = "Preenchimento obrigatório")
-    @Length(min = 5,max = 80,message = "Nome deve conter entre 5 a 80 caracteres")
+    @Length(min = 5, max = 80, message = "Nome deve conter entre 5 a 80 caracteres")
     private String nome;
 
     @NotEmpty(message = "Preenchimento obrigatório")
@@ -40,7 +40,8 @@ public class ClienteNewDTO implements Serializable {
 
     private Integer cidadeID;
 
-    public ClienteNewDTO(){}
+    public ClienteNewDTO() {
+    }
 
     public String getNome() {
         return nome;

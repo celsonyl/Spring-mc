@@ -9,14 +9,15 @@ import java.util.Date;
 
 @Entity
 @JsonTypeName("pagamentoComBoleto")
-public class PagamentoComBoleto extends Pagamento{
+public class PagamentoComBoleto extends Pagamento {
 
     @JsonFormat(pattern = "dd/MM/yyyy")
     private Date dataVencimento;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private  Date dataPagamento;
+    private Date dataPagamento;
 
-    public PagamentoComBoleto(){}
+    public PagamentoComBoleto() {
+    }
 
     public PagamentoComBoleto(Integer id, EstadoPagamento estadoPagamento, Pedido pedido, Date dataVencimento, Date dataPagamento) {
         super(id, estadoPagamento, pedido);

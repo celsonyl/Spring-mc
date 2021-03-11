@@ -1,12 +1,12 @@
 package com.celso.springmc.services.exceptions;
 
-public class ObjectNotFoundException extends RuntimeException{
+public class ObjectNotFoundException extends RuntimeException {
 
-    public ObjectNotFoundException(String msg){
+    public ObjectNotFoundException(String msg) {
         super(msg);
     }
 
-    public ObjectNotFoundException(String msg,Throwable cause){
-        super(msg,cause);
+    public ObjectNotFoundException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

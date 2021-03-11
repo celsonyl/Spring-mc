@@ -22,48 +22,48 @@ public class CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    public Categoria find(Integer id){ //Procura Categoria por ID
+    public Categoria find(Integer id) { //Procura Categoria por ID
         Optional<Categoria> cat = categoriaRepository.findById(id);
         return cat.orElseThrow(() -> new ObjectNotFoundException(
                 "Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
     }
 
-    public List<Categoria> findAll(){ //Lista todas as Categorias
+    public List<Categoria> findAll() { //Lista todas as Categorias
         return categoriaRepository.findAll();
 
     }
 
 
-    public Categoria insert(Categoria obj){ //Insere uma Categoria
+    public Categoria insert(Categoria obj) { //Insere uma Categoria
         obj.setId(null);
         return categoriaRepository.save(obj);
     }
 
-    public void update(Categoria obj){ //Atualiza uma Categoria
+    public void update(Categoria obj) { //Atualiza uma Categoria
         Categoria newOBJ = find(obj.getId());
-        updateData(newOBJ,obj);
+        updateData(newOBJ, obj);
         categoriaRepository.save(newOBJ);
     }
 
-    public void delete(Integer id){ //Deleta uma Categoria
+    public void delete(Integer id) { //Deleta uma Categoria
         find(id);
         try {
             categoriaRepository.deleteById(id);
-        }catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new DataIntegrityException("Não é posivel deletar uma Categoria que possui Produtos!");
         }
     }
 
-    public Page<Categoria> findPage(Integer page,Integer linesPerPage,String orderBy,String direction){ //Paginação com parãmetros opcionais na Requisição
-        PageRequest pageRequest = PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy);
+    public Page<Categoria> findPage(Integer page, Integer linesPerPage, String orderBy, String direction) { //Paginação com parãmetros opcionais na Requisição
+        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy);
         return categoriaRepository.findAll(pageRequest);
     }
 
-    public Categoria fromDTO(CategoriaDTO objDTO){
-        return new Categoria(objDTO.getId(),objDTO.getNome());
+    public Categoria fromDTO(CategoriaDTO objDTO) {
+        return new Categoria(objDTO.getId(), objDTO.getNome());
     }
 
-    private void updateData(Categoria newOBJ, Categoria obj){
+    private void updateData(Categoria newOBJ, Categoria obj) {
         newOBJ.setNome(obj.getNome());
 
     }

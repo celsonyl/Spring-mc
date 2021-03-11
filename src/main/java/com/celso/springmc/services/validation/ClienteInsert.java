@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Constraint(validatedBy = ClienteInsertValidator.class)
-@Target({ ElementType.TYPE} )
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 
 public @interface ClienteInsert {

@@ -6,7 +6,7 @@ import org.springframework.mail.SimpleMailMessage;
 
 import java.util.Date;
 
-public abstract class AbstractEmailService implements EmailService{
+public abstract class AbstractEmailService implements EmailService {
     @Value("${default.sender}")
     private String sender;
 
@@ -16,11 +16,11 @@ public abstract class AbstractEmailService implements EmailService{
         sendEMail(sm);
     }
 
-    protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj){
+    protected SimpleMailMessage prepareSimpleMailMessageFromPedido(Pedido obj) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setTo(obj.getCliente().getEmail());
         simpleMailMessage.setFrom(sender);
-        simpleMailMessage.setSubject("Pedido Confirmado!\n Código: "+obj.getId());
+        simpleMailMessage.setSubject("Pedido Confirmado!\n Código: " + obj.getId());
         simpleMailMessage.setSentDate(new Date(System.currentTimeMillis()));
         simpleMailMessage.setText(obj.toString());
 

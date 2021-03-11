@@ -19,7 +19,7 @@ public class Pedido implements Serializable {
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private Date instante;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "pedido")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "pedido")
     private Pagamento pagamento;
 
     @ManyToOne
@@ -33,18 +33,19 @@ public class Pedido implements Serializable {
     @OneToMany(mappedBy = "id.pedido")
     private Set<ItemPedido> itens = new HashSet<>();
 
-    public Pedido(){}
+    public Pedido() {
+    }
 
-    public Pedido(Integer id, Date instante,  Cliente cliente, Endereco enderecoDeEntrega) {
+    public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
         this.id = id;
         this.instante = instante;
         this.cliente = cliente;
         this.enderecoDeEntrega = enderecoDeEntrega;
     }
 
-    public double getValorTotal(){
+    public double getValorTotal() {
         double sum = 0;
-        for(ItemPedido o : itens){
+        for (ItemPedido o : itens) {
             sum += o.getSubTotal();
         }
         return sum;
@@ -113,7 +114,7 @@ public class Pedido implements Serializable {
 
     @Override
     public String toString() {
-        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt","BR"));
+        NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy hh:MM");
         final StringBuilder sb = new StringBuilder();
         sb.append("Pedido Numero: ");
@@ -125,7 +126,7 @@ public class Pedido implements Serializable {
         sb.append(", Situação do pagamento: ");
         sb.append(getPagamento().getEstadoPagamento().getNome());
         sb.append("\nDetalhes:\n");
-        for(ItemPedido ip : getItens()){
+        for (ItemPedido ip : getItens()) {
             sb.append(ip.toString());
         }
         sb.append("Valor total :");

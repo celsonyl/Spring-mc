@@ -23,7 +23,7 @@ public class DevConfig {
 
     @Bean
     public boolean instantiateDatabase() throws ParseException {
-        if(!"create".equals(strategy))
+        if (!"create".equals(strategy))
             return false;
 
         dbService.instantiateTestDB();
@@ -31,7 +31,7 @@ public class DevConfig {
     }
 
     @Bean
-    public EmailService emailService(){
+    public EmailService emailService() {
         return new SMTPEmailService();
     }
 }

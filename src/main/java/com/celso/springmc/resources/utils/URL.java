@@ -2,27 +2,24 @@ package com.celso.springmc.resources.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 public class URL {
 
-    public static List<Integer> decodeList(String s){
+    public static List<Integer> decodeList(String s) {
         String[] vet = s.split(",");
         List<Integer> list = new ArrayList<>();
 
-        for(int i = 0;i<vet.length;i++){
+        for (int i = 0; i < vet.length; i++) {
             list.add(Integer.parseInt(vet[i]));
         }
         return list;
     }
 
-    public static String decodeParam(String s){
-        try {
-           return URLDecoder.decode(s, "UTF-8");
-        }catch (UnsupportedEncodingException e){
-            return "";
-        }
+    public static String decodeParam(String s) {
+        return URLDecoder.decode(s, StandardCharsets.UTF_8);
     }
 
 }

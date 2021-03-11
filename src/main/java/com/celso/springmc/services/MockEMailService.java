@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.SimpleMailMessage;
 
 
-public class MockEMailService extends AbstractEmailService{
+public class MockEMailService extends AbstractEmailService {
 
     private static final Logger log = LoggerFactory.getLogger(MockEMailService.class);
 

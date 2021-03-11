@@ -3,7 +3,7 @@ package com.celso.springmc.resources.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ValidationError extends StandardError{
+public class ValidationError extends StandardError {
 
     private List<FieldMessage> errors = new ArrayList<>();
 
@@ -16,7 +16,7 @@ public class ValidationError extends StandardError{
         return errors;
     }
 
-    public void addError(String fieldname,String message) {
-        errors.add(new FieldMessage(fieldname,message));
+    public void addError(String fieldname, String message) {
+        errors.add(new FieldMessage(fieldname, message));
     }
 }
