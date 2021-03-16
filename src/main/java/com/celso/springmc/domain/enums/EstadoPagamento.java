@@ -9,7 +9,7 @@ public enum EstadoPagamento {
     private Integer id;
     private String nome;
 
-    private EstadoPagamento(Integer id, String nome) {
+    EstadoPagamento(Integer id, String nome) {
         this.id = id;
         this.nome = nome;
     }

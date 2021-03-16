@@ -7,7 +7,7 @@ public enum TipoCliente {
     private Integer cod;
     private String desc;
 
-    private TipoCliente(Integer cod, String desc) {
+    TipoCliente(Integer cod, String desc) {
         this.cod = cod;
         this.desc = desc;
     }

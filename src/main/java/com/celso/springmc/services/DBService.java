@@ -3,6 +3,7 @@ package com.celso.springmc.services;
 import com.celso.springmc.SpringmcApplication;
 import com.celso.springmc.domain.*;
 import com.celso.springmc.domain.enums.EstadoPagamento;
+import com.celso.springmc.domain.enums.Perfil;
 import com.celso.springmc.domain.enums.TipoCliente;
 import com.celso.springmc.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,14 +108,19 @@ public class DBService {
         cidadeRepository.saveAll(Arrays.asList(cid1, cid2, cid3));
 
         Cliente cli1 = new Cliente(null, "Maria Silva", "celsonyl@hotmail.com", "36378912377", TipoCliente.PESSOAFISICA,bCryptPasswordEncoder.encode("rato"));
+        Cliente cli2 = new Cliente(null, "Celso Antonio", "apenaslebot@hotmail.com", "901.117.050-45", TipoCliente.PESSOAFISICA,bCryptPasswordEncoder.encode("87"));
+        cli2.addPerfil(Perfil.ADMIN);
         cli1.getTelefones().addAll(Arrays.asList("93838393", "27363323"));
+        cli2.getTelefones().addAll(Arrays.asList("9123393", "431223"));
 
         Endereco e1 = new Endereco(null, "Rua Flores", "300", "Apto 203", "Jardim", "38220834", cli1, cid1);
         Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "38777012", cli1, cid2);
+        Endereco e3 = new Endereco(null, "Avenida Mata Pombo", "200", null, "Costa Norte", "2357852", cli2, cid2);
 
         cli1.getEnderecos().addAll(Arrays.asList(e1, e2));
+        cli2.getEnderecos().add(e3);
 
-        clienteRepository.save(cli1);
+        clienteRepository.saveAll(Arrays.asList(cli1,cli2));
         enderecoRepository.saveAll(Arrays.asList(e1, e2));
 
         SimpleDateFormat date = new SimpleDateFormat("dd/MM/yyyy HH:mm");
