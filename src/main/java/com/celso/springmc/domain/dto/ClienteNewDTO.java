@@ -2,7 +2,6 @@ package com.celso.springmc.domain.dto;
 
 import com.celso.springmc.services.validation.ClienteInsert;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.br.CPF;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -22,6 +21,9 @@ public class ClienteNewDTO implements Serializable {
     @NotEmpty(message = "Preenchimento obrigatório")
     private String cpfOuCnpj;
     private Integer tipo;
+
+    @NotEmpty(message = "Preenchimento obrigatório")
+    private String senha;
 
     private String logradouro;
 
@@ -145,5 +147,13 @@ public class ClienteNewDTO implements Serializable {
 
     public void setCidadeID(Integer cidadeID) {
         this.cidadeID = cidadeID;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
