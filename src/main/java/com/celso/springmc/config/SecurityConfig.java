@@ -1,8 +1,10 @@
 package com.celso.springmc.config;
 
 import com.celso.springmc.security.JWTAuthenticationFilter;
+import com.celso.springmc.security.JWTAuthorizationFilter;
 import com.celso.springmc.security.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -28,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private Environment environment;
 
+    @Qualifier("userDetailsServiceImpl")
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -57,6 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                   .anyRequest().authenticated();
 
           httpSecurity.addFilter(new JWTAuthenticationFilter(authenticationManager(),jwtUtil));
+          httpSecurity.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtUtil, userDetailsService));
           httpSecurity.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }
 
