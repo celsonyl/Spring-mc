@@ -5,9 +5,12 @@ import com.celso.springmc.domain.Cliente;
 import com.celso.springmc.domain.Endereco;
 import com.celso.springmc.domain.dto.ClienteDTO;
 import com.celso.springmc.domain.dto.ClienteNewDTO;
+import com.celso.springmc.domain.enums.Perfil;
 import com.celso.springmc.domain.enums.TipoCliente;
 import com.celso.springmc.repositories.ClienteRepository;
 import com.celso.springmc.repositories.EnderecoRepository;
+import com.celso.springmc.security.UserSS;
+import com.celso.springmc.services.exceptions.AuthorizationException;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,10 @@ public class ClienteService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public Cliente find(Integer id) { //Busca um Cliente por ID
+        UserSS userSS = UserService.authenticated();
+        if(userSS == null || !userSS.hasRole(Perfil.ADMIN) && !id.equals(userSS.getId())){
+            throw new AuthorizationException("Acesso negado");
+        }
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado: " + id + " Tipo: " + Cliente.class.getName()));
     }

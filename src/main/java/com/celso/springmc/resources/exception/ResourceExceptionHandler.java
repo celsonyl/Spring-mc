@@ -1,5 +1,6 @@
 package com.celso.springmc.resources.exception;
 
+import com.celso.springmc.services.exceptions.AuthorizationException;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,13 @@ public class ResourceExceptionHandler {
             erro.addError(x.getField(), x.getDefaultMessage());
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<StandardError> authorization(AuthorizationException error, HttpServletRequest request) {
+        StandardError erro = new StandardError(HttpStatus.FORBIDDEN.value(), error.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
     }
 
 }

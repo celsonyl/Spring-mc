@@ -26,6 +26,10 @@ public class UserSS implements UserDetails {
         this.authorities = perfis.stream().map(x -> new SimpleGrantedAuthority(x.getDescricao())).collect(Collectors.toList());
     }
 
+    public boolean hasRole(Perfil perfil) {
+        return getAuthorities().contains(new SimpleGrantedAuthority(perfil.getDescricao()));
+    }
+
     public Integer getId(){
         return id;
     }
@@ -65,4 +69,6 @@ public class UserSS implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
