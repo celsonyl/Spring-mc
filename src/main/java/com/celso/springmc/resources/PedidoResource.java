@@ -5,6 +5,7 @@ import com.celso.springmc.domain.Pedido;
 import com.celso.springmc.domain.dto.CategoriaDTO;
 import com.celso.springmc.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,6 +24,16 @@ public class PedidoResource {
     public ResponseEntity<Pedido> find(@PathVariable Integer id) { //Busca Pedido por ID
         Pedido obj = pedidoService.find(id);
         return ResponseEntity.ok().body(obj);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)   //Paginação com parãmetros opcionais na Requisição
+    public ResponseEntity<Page<Pedido>> findPage(@RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                       @RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage,
+                                                       @RequestParam(value = "order", defaultValue = "instante") String orderBy,
+                                                       @RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+
+        Page<Pedido> listPage = pedidoService.findPage(page, linesPerPage, orderBy, direction);
+        return ResponseEntity.ok(listPage);
     }
 
     @RequestMapping(method = RequestMethod.POST)
