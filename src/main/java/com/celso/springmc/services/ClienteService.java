@@ -14,6 +14,7 @@ import com.celso.springmc.services.exceptions.AuthorizationException;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
@@ -42,6 +44,12 @@ public class ClienteService {
 
     @Autowired
     private S3Service s3Service;
+
+    @Autowired
+    private ImageService imageService;
+
+    @Value("${img.prefix.cliente.profile}")
+    private String prefix;
 
     public Cliente find(Integer id) { //Busca um Cliente por ID
         UserSS userSS = UserService.authenticated();
@@ -116,12 +124,10 @@ public class ClienteService {
         if(userSS == null){
             throw new AuthorizationException("Acesso negado");
         }
+        BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+        String fileName = prefix + userSS.getId() + ".jpg";
+        return s3Service.uploadFile(imageService.getInputStream(jpgImage,"jpg"),fileName,"image");
 
-        URI uri = s3Service.uploadFile(multipartFile);
-        Cliente cliente = clienteRepository.findByEmail(userSS.getUsername());
-        cliente.setImageURL(uri.toString());
-        clienteRepository.save(cliente);
-        return uri;
     }
 
 }
