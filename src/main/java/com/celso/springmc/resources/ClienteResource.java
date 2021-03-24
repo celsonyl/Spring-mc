@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,5 +67,11 @@ public class ClienteResource {
         clienteService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value = "/picture", method = RequestMethod.POST)
+    public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name = "file")MultipartFile multipartFile) throws IOException {
+        URI uri = clienteService.uploadProfilePicture(multipartFile);
+        return ResponseEntity.created(uri).build();
     }
 }

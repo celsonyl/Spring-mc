@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpringmcApplication implements CommandLineRunner {
 
-    @Autowired
-    private S3Service s3Service;
-
     public static void main(String[] args) {
         SpringApplication.run(SpringmcApplication.class, args);
     }
@@ -19,7 +16,6 @@ public class SpringmcApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-            s3Service.uploadFile("E:\\ab1f3294-16d9-4285-907c-9475d740ffd8.jfif");
 
     }
 }

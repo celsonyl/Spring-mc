@@ -1,16 +1,19 @@
 package com.celso.springmc.services;
 
-import com.amazonaws.AmazonClientException;
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @Service
 public class S3Service {
@@ -23,19 +26,26 @@ public class S3Service {
 
     private Logger log = LoggerFactory.getLogger(S3Service.class);
 
-    public void uploadFile(String path){
+    public URI uploadFile(MultipartFile multipartFile) throws IOException{
+        String fileName = multipartFile.getOriginalFilename();
+        InputStream inputStream = multipartFile.getInputStream();
+        String contentType = multipartFile.getContentType();
+        return uploadFile(inputStream,fileName,contentType);
+
+    }
+
+    public URI uploadFile(InputStream inputStream,String fileName,String contentType){
         try {
-            File file = new File(path);
-            log.info("Indo..");
-            amazonS3.putObject(new PutObjectRequest(bucket, "teste.jpg", file));
+            ObjectMetadata objectMetadata = new ObjectMetadata();
+            objectMetadata.setContentType(contentType);
+            log.info("Enviando..");
+            amazonS3.putObject(new PutObjectRequest(bucket, fileName, inputStream, objectMetadata));
             log.info("Foi!");
 
-        }catch (AmazonServiceException e){
-            log.info("Amazon Exception " + e.getErrorMessage());
-            log.info("Status Code "+e.getErrorCode());
-
-        }catch (AmazonClientException e){
-            log.info("Amazon Cliente Exception " +e.getMessage());
+            return amazonS3.getUrl(bucket, fileName).toURI();
+        }catch (URISyntaxException e){
+            throw new RuntimeException("Erro ao converter URL to URI");
         }
+
     }
 }
