@@ -3,6 +3,7 @@ package com.celso.springmc.services;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.celso.springmc.services.exceptions.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class S3Service {
 
     private Logger log = LoggerFactory.getLogger(S3Service.class);
 
-    public URI uploadFile(MultipartFile multipartFile) throws IOException{
+    public URI uploadFile(MultipartFile multipartFile) throws IOException {
         String fileName = multipartFile.getOriginalFilename();
         InputStream inputStream = multipartFile.getInputStream();
         String contentType = multipartFile.getContentType();
@@ -44,7 +45,7 @@ public class S3Service {
 
             return amazonS3.getUrl(bucket, fileName).toURI();
         }catch (URISyntaxException e){
-            throw new RuntimeException("Erro ao converter URL to URI");
+            throw new FileException("Erro ao converter URL to URI");
         }
 
     }

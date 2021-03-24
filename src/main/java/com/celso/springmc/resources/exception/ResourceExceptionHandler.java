@@ -1,7 +1,11 @@
 package com.celso.springmc.resources.exception;
 
+import com.amazonaws.AmazonClientException;
+import com.amazonaws.AmazonServiceException;
+import com.amazonaws.services.s3.model.AmazonS3Exception;
 import com.celso.springmc.services.exceptions.AuthorizationException;
 import com.celso.springmc.services.exceptions.DataIntegrityException;
+import com.celso.springmc.services.exceptions.FileException;
 import com.celso.springmc.services.exceptions.ObjectNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,5 +50,35 @@ public class ResourceExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(erro);
     }
+
+    @ExceptionHandler(FileException.class)
+    public ResponseEntity<StandardError> fileException(FileException error, HttpServletRequest request) {
+        StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), error.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(AmazonServiceException.class)
+    public ResponseEntity<StandardError> amazonServiceException(AmazonServiceException error, HttpServletRequest request) {
+        HttpStatus code = HttpStatus.valueOf(error.getErrorCode());
+        StandardError erro = new StandardError(code.value(), error.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(code.value()).body(erro);
+    }
+
+    @ExceptionHandler(AmazonClientException.class)
+    public ResponseEntity<StandardError> amazonClienteException(AmazonClientException error, HttpServletRequest request) {
+        StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), error.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
+    @ExceptionHandler(AmazonS3Exception.class)
+    public ResponseEntity<StandardError> amazonS3Exception(AmazonS3Exception error, HttpServletRequest request) {
+        StandardError erro = new StandardError(HttpStatus.BAD_REQUEST.value(), error.getMessage(), System.currentTimeMillis());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
+
 
 }
