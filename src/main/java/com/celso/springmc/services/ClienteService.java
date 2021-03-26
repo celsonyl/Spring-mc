@@ -59,6 +59,20 @@ public class ClienteService {
         Optional<Cliente> obj = clienteRepository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Cliente não encontrado: " + id + " Tipo: " + Cliente.class.getName()));
     }
+    
+    public Cliente findByEmail(String email){
+        UserSS userSS = UserService.authenticated();
+        if(userSS == null || !userSS.hasRole(Perfil.ADMIN) && !email.equals(userSS.getUsername())){
+            throw new AuthorizationException("Acesso negado");
+        }
+
+        Cliente obj = clienteRepository.findByEmail(email);
+        if(obj == null){
+            throw new ObjectNotFoundException("Email não encontrado!");
+        }
+        return obj;
+
+    }
 
     public List<Cliente> findAll() { //Lista todos os Clientes
         return clienteRepository.findAll();
